@@ -7,7 +7,9 @@
 {{badge_status_block}}
 
 ---
-![tsunmai-banner.png](docs/en/assets/tsunmai-banner.png)
+
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+
 # 🌊 Bluewater Central Script Repository
 
 **The authoritative, versioned library of automation scripts and Git hooks for all Bluewater repositories.  

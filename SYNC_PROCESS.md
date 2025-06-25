@@ -8,7 +8,10 @@
 
 ---
 
-# 📢 Bluewater Documentation & Translation Synchronization Process
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+
+
+# 🌊 Bluewater Documentation & Translation Synchronization Process
 
 > **Scope:** This document defines the **official workflow, responsibilities, and required actions** for **documentation, translation, and publication synchronization** across the Bluewater project.  
 > For **automation script distribution and onboarding**, see [Script Synchronization & Distribution Architecture](docs/en/architecture/old/script-sync-architecture.md).

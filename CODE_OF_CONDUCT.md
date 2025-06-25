@@ -8,7 +8,10 @@
 
 ---
 
-# Contributor Covenant Code of Conduct
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+
+
+# 🌊 Contributor Covenant Code of Conduct
 
 ## Our Pledge
 

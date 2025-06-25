@@ -8,6 +8,8 @@
 
 ---
 
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+
 # 🌊 Contributing to Bluewater Scripts
 
 Thank you for your interest in contributing to **Bluewater Scripts**!

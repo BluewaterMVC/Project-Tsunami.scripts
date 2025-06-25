@@ -8,7 +8,10 @@
 
 ---
 
-# 🗳️ Bluewater Project Governance
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+
+
+# 🌊 Project Governance
 
 This document defines the roles, decision-making processes, and operational standards for the Bluewater Framework, Bluewater Scripts, and Documentation projects. Our governance model ensures transparency, accountability, community input, and continuity as the project evolves.
 

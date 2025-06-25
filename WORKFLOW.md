@@ -8,7 +8,9 @@
 
 ---
 
-# Bluewater Project Workflow
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+
+# 🌊 Bluewater Project Workflow
 
 This document defines the **canonical workflow** for all contributors and maintainers working with the Bluewater project.
 Adherence to this workflow is required for all code, documentation, translation, and process changes.

@@ -8,6 +8,8 @@
 
 ---
 
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+
 # 🛡️ Bluewater Scripts Security Policy
 
 ## Supported Versions
