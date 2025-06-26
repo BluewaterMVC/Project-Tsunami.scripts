@@ -27,21 +27,22 @@ This process applies to **all Markdown documentation files** (root, architecture
 
 ## 3. What is the File Header Block?
 
-The **file header block** is an automated section at the top of each document. It replaces the `{{file_header_block}}` tag with up-to-date metadata:
+The **file header block** is an automated section at the top of each document, **delimited by unique HTML comment markers** for safe automation:
 
-```
-
+````markdown
+<!-- FILE HEADER:START -->
 📄 **File:** /docs/en/technical/file-header-automation.md
-🔄 **Status:** In Progress
+🟢 **Status:** ✅ Approved
 🕒 **Updated:** 2025-07-01
 🔖 **Version:** 1.0
 📦 **Scope:** 🌐 Public – All Contributors
 👨‍💻 **Author:** Bluewater Team
+<!-- FILE HEADER:END -->
+`````
 
-````
-
-**Do not hand-edit this block.**  
-All changes are made by the automation process on commit or push.
+**Do not hand-edit this block.**
+All changes are made by the automation process on commit, push, or PR.
+The block is always bounded by `<!-- FILE HEADER:START -->` and `<!-- FILE HEADER:END -->`, allowing the automation script to find and update the metadata reliably.
 
 ---
 
@@ -49,28 +50,30 @@ All changes are made by the automation process on commit or push.
 
 ### a. **Trigger Points**
 
-- On every commit or push, the pre-commit hook or CI job:
-    - Scans files for the `{{file_header_block}}` placeholder.
-    - Replaces it with a rendered header containing up-to-date metadata.
-    - Updates the header if any metadata changes (file path, date, status, etc.).
+* On every commit, push, or pull request, the pre-commit hook or CI job:
+
+  * Scans files for either the `{{file_header_block}}` placeholder or an existing header block (between markers).
+  * If the placeholder is found, it is replaced with the rendered metadata block (including the markers).
+  * If an existing block is found (delimited by the markers), it is updated in place.
+  * If neither is found, the header block is inserted at the top of the file (after any language navigation bar).
 
 ### b. **How Values are Determined**
 
-| Field   | Source/Logic                                                                     |
-|---------|----------------------------------------------------------------------------------|
-| File    | Calculated from repo path; always absolute from project root                     |
-| Status  | Detected by script: Not Started, In Progress, In Review, Published, Needs Update |
-| Updated | Set to last commit affecting the file                                            |
-| Version | Default is `1.0`; can be overridden in config or tags                            |
-| Scope   | Default or set per repo/config (e.g., "Public – All Contributors")               |
-| Author  | Default is "Bluewater Team"; can be set in config or contributor list            |
+| Field   | Source/Logic                                                                                             |
+|---------|----------------------------------------------------------------------------------------------------------|
+| File    | Calculated from repo path; always absolute from project root                                             |
+| Status  | Determined by automation: Not Started, In Progress, In Review, Ready for Production, In Production, etc. |
+| Updated | Set to last commit affecting the file                                                                    |
+| Version | Default is `1.0`; can be overridden in config or tags                                                    |
+| Scope   | Default or set per repo/config (e.g., "Public – All Contributors")                                       |
+| Author  | Default is "Bluewater Team"; can be set in config or contributor list                                    |
 
 ### c. **Automation Responsibilities**
 
-- Insert or update the header block.
-- Prevent manual drift—warn if hand edits are detected.
-- Support root and language-specific files.
-- Log all automated changes (for CI traceability).
+* Insert, update, or replace the header block as needed.
+* Prevent manual drift—warn if hand edits are detected.
+* Support root and language-specific files.
+* Log all automated changes (for CI traceability).
 
 ---
 
@@ -78,32 +81,33 @@ All changes are made by the automation process on commit or push.
 
 ### a. **Pre-commit Hook / CI Workflow**
 
-- Use the provided Python (or shell) script located at `/tools/file-header-update.py`.
-- Add to the `.pre-commit-config.yaml` or your project’s CI workflow (see `/.github/workflows/`).
-- Configuration file:  
-  - Defaults can be set in `/tools/config/header-config.yml`.
+* Use the provided Python (or shell) script located at `/tools/file-header-update.py`.
+* Add to the `.pre-commit-config.yaml` or your project’s CI workflow (see `/.github/workflows/`).
+* Configuration file:
+
+  * Defaults can be set in `/tools/config/header-config.yml`.
 
 ### b. **Manual Overrides**
 
-- Rarely needed.  
-- If required, document in a YAML frontmatter block above the header (automation will preserve these).
+* Rarely needed.
+* If required, document in a YAML frontmatter block above the header (automation will preserve these).
 
 ---
 
 ## 6. Error Handling & Troubleshooting
 
-- **Missing `{{file_header_block}}`:** Script will insert the block at the top after any language banner.
-- **Header Drift/Manual Edit:** Script will overwrite and log a warning.
-- **Config Errors:** CI fails with error message and link to documentation.
-- **Unsupported File Types:** Skipped with notice.
+* **Missing `{{file_header_block}}` and no header block:** Script inserts the block at the top after any language banner.
+* **Header Drift/Manual Edit:** Script overwrites and logs a warning if changes within the block are detected.
+* **Config Errors:** CI fails with error message and link to documentation.
+* **Unsupported File Types:** Skipped with notice.
 
 ---
 
 ## 7. Handling Translations
 
-- The header block is rendered per file, per language.
-- The `Status:` field reflects translation status if under `/docs/{lang}/`.
-- Automation updates all corresponding translated files upon source changes (see [Translation Status Policy](../architecture/i18n/translation-status-policy.md)).
+* The header block is rendered per file, per language.
+* The `Status:` field reflects translation status if under `/docs/{lang}/`.
+* Automation updates all corresponding translated files upon source changes (see [Translation Status Policy](../architecture/i18n/translation-status-policy.md)).
 
 ---
 
@@ -111,9 +115,9 @@ All changes are made by the automation process on commit or push.
 
 ```shell
 python3 tools/file-header-update.py --all
-````
+```
 
-* Scans all docs, updates/inserts header blocks as needed.
+*Scans all docs, updates/inserts header blocks as needed.*
 
 Add to pre-commit in `.pre-commit-config.yaml`:
 

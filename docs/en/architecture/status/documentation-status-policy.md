@@ -13,6 +13,10 @@
 This document defines the **official policy and automation standards** for tracking, updating, and displaying the status of all documentation files in the Bluewater Scripts repository and downstream projects.
 It describes recognized status states, automation workflows, update triggers, and contributor responsibilities, ensuring visibility, accountability, and quality throughout the documentation lifecycle.
 
+> **Note:**  
+> Every documentation file begins with a machine-managed metadata header block, wrapped in HTML comment markers (`<!-- FILE HEADER:START -->` and `<!-- FILE HEADER:END -->`), automatically inserted and updated by project automation.  
+> See the [Header and Metadata Policy](../status/header-policy.md) for full format details.
+
 ---
 
 ## 1. 🎯 Purpose
@@ -99,18 +103,19 @@ Every documentation file must declare its current lifecycle status via the file 
 ## 4. Status Block Placement
 
 * The **file header block** containing the status is always inserted (and updated) automatically at the top of each doc file, immediately following the language navigation bar.
+* The header block is **always wrapped by unique HTML comment markers** to allow reliable automation:
+    ```markdown
+    <!-- FILE HEADER:START -->
+    📄 **File:** /docs/en/architecture/status/document-status-policy.md  
+    🔄 **Status:** 🟦 In Review  
+    🕒 **Updated:** 2025-07-01  
+    🔖 **Version:** 1.0  
+    📦 **Scope:** 🌐 Public  
+    👨‍💻 **Author:** Bluewater Team
+    <!-- FILE HEADER:END -->
+    ```
 * Authors must **never edit the block by hand**; use `{{file_header_block}}` placeholder only.
 * If the placeholder is missing, automation inserts both the language bar and the header block automatically.
-
-**Sample Render:**
-```markdown
-📄 **File:** /docs/en/architecture/status/document-status-policy.md  
-🔄 **Status:** 🟦 In Review  
-🕒 **Updated:** 2025-07-01  
-🔖 **Version:** 1.0  
-📦 **Scope:** 🌐 Public  
-👨‍💻 **Author:** Bluewater Team
-```
 
 ---
 
@@ -132,7 +137,7 @@ Every documentation file must declare its current lifecycle status via the file 
 > **TODO:** This page has not yet been authored.  
 > Content will be added soon.
 <!-- Do not remove this placeholder. It is managed by automation. -->
-```
+````
 
 ---
 

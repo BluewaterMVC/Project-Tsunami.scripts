@@ -30,16 +30,18 @@ It ensures consistent, up-to-date, and machine-readable metadata for every docum
 
 ## 2. Header Block Fields & Format
 
-Every documentation file must begin with the following metadata block, directly below the language navigation bar (if present):
+Every documentation file must begin with the following metadata block, directly below the language navigation bar (if present), and **delimited by unique HTML comment markers**:
 
 ```markdown
+<!-- FILE HEADER:START -->
 📄 **File:** /path/to/file.md  
 🔄 **Status:** IN PROGRESS  
 🕒 **Updated:** YYYY-MM-DD  
 🔖 **Version:** 1.0  
 📦 **Scope:** 🌐 Public – All Contributors  
 👨‍💻 **Author:** Bluewater Team
-```
+<!-- FILE HEADER:END -->
+````
 
 **Field Definitions:**
 
@@ -50,14 +52,18 @@ Every documentation file must begin with the following metadata block, directly 
 * **Scope:** Audience and visibility, e.g., Public, Internal, Translation Team
 * **Author:** Primary authors/maintainers (can be default or configured)
 
+**Do not hand-edit the metadata block.**
+The block is always wrapped with `<!-- FILE HEADER:START -->` and `<!-- FILE HEADER:END -->` for safe and reliable automation.
+
 ---
 
 ## 3. Placement & Template Use
 
 * **Always appears as the very first Markdown block** (after the language banner)
 * **NEVER manually edited by contributors**
-* Contributors place a `{{file_header_block}}` placeholder in new files; automation replaces or updates this placeholder.
-* If missing, automation should insert the block and notify contributor.
+* Contributors place a `{{file_header_block}}` placeholder in new files; automation replaces this placeholder with the fully rendered header block (including the comment markers).
+* If missing, automation will insert the block and notify the contributor.
+* When a file is edited and already contains a header block (between the markers), automation will update or replace the block as needed.
 
 ---
 
@@ -65,13 +71,14 @@ Every documentation file must begin with the following metadata block, directly 
 
 * **Statuses include:**
 
-    * NOT STARTED (empty or placeholder files)
-    * IN PROGRESS (actively authored, but not ready for review)
-    * IN REVIEW (under peer/maintainer review)
-    * PUBLISHED (approved and current)
-    * NEEDS UPDATE (detected out of date by automation or flagged by contributors)
-    * DEPRECATED (marked for deprecation, not deleted)
-* **Transitions** are managed by automation based on workflow events (see [Documentation Status Policy](./documentation-status-policy.md))
+  * NOT STARTED (empty or placeholder files)
+  * IN PROGRESS (actively authored, but not ready for review)
+  * IN REVIEW (under peer/maintainer review)
+  * PUBLISHED (approved and current)
+  * NEEDS UPDATE (detected out of date by automation or flagged by contributors)
+  * DEPRECATED (marked for deprecation, not deleted)
+* **Transitions** are managed by automation based on workflow events (see [Documentation Status Policy](./documentation-status-policy.md)).
+* Status can be updated automatically in pre-commit, CI, or PR/merge automation.
 
 ---
 
@@ -95,13 +102,14 @@ Every documentation file must begin with the following metadata block, directly 
 
 * **Automation is authoritative:**
 
-    * Only scripts update or create the metadata block.
-    * Manual edits to the header are discouraged and may be overwritten.
+  * Only scripts update or create the metadata block.
+  * Manual edits to the header are discouraged and may be overwritten.
+  * The automation script detects either the `{{file_header_block}}` placeholder or an existing header block (between the comment markers), and inserts or updates as needed.
 * **Pre-commit hook or CI job**:
 
-    * Scans files for the `{{file_header_block}}` tag.
-    * Inserts or updates the block according to policy.
-    * Updates status, date, and any other required metadata.
+  * Scans files for the placeholder or comment markers.
+  * Inserts or updates the block according to policy.
+  * Updates status, date, and any other required metadata.
 * All automation must reference this document and [file-header-automation.md](../../technical/file-header-automation.md).
 
 ---

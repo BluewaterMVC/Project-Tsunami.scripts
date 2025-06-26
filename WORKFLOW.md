@@ -3,7 +3,7 @@
 
 ---
 
-<!-- File Header Metadata Block -->
+<!-- File Header Metadata Block (automated on commit) -->
 {{file_header_block}}
 
 ---
@@ -88,6 +88,20 @@ This workflow document is **binding** for all contributors and maintainers.
 * Use clear Markdown (`.md`) and follow Bluewater’s doc formatting standards.
 * Major documentation changes require peer review and may require translation updates.
 * **All documentation changes are validated and, where possible, auto-checked for completeness and proper formatting using automated scripts and CI.**
+* **Each documentation file must begin with a metadata header block, placed below the language navigation bar (if present), and wrapped with unique HTML comment markers:**
+
+    ```markdown
+    <!-- FILE HEADER:START -->
+    📄 **File:** /path/to/file.md  
+    🔄 **Status:** IN PROGRESS  
+    🕒 **Updated:** YYYY-MM-DD  
+    🔖 **Version:** 1.0  
+    📦 **Scope:** 🌐 Public – All Contributors  
+    👨‍💻 **Author:** Bluewater Team
+    <!-- FILE HEADER:END -->
+    ```
+
+  *This block is managed by automation and must not be hand-edited. For details, see the [File Header & Metadata Policy](./docs/en/architecture/status/header-policy.md).*
 
 ---
 
@@ -112,7 +126,7 @@ This workflow document is **binding** for all contributors and maintainers.
     * Scripts automatically update `mkdocs.yml` and `requirements.txt` to reflect supported languages.
     * Contributors are notified via CI of any discrepancies or required manual intervention.
 * Do **not** edit generated files or directory structures by hand—always use the automation scripts.
-* For workflow details and troubleshooting, see [SYNC\_PROCESS.md](./SYNC_PROCESS.md) and [Tools README](./tools/i18n/README.md).
+* For workflow details and troubleshooting, see [SYNC_PROCESS.md](./SYNC_PROCESS.md) and [Tools README](./tools/i18n/README.md).
 * **All automation scripts are tracked and versioned in the repository, with usage described in their respective READMEs.**
 
 ---
@@ -204,7 +218,7 @@ This workflow document is **binding** for all contributors and maintainers.
 
 * [CONTRIBUTING.md](./CONTRIBUTING.md)
 * [PHPDoc Standards](./docs/en/contribute/phpdoc.md)
-* [SYNC\_PROCESS.md](./SYNC_PROCESS.md)
+* [SYNC_PROCESS.md](./SYNC_PROCESS.md)
 * [Tools README](./tools/i18n/README.md)
 * [GOVERNANCE.md](./GOVERNANCE.md)
 * [Code of Conduct](./CODE_OF_CONDUCT.md)

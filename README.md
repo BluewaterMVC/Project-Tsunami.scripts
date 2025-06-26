@@ -36,6 +36,9 @@
 **The authoritative, versioned library of automation scripts and Git hooks for all Bluewater repositories.  
 Ensures consistent standards, metadata management, and automated workflows across the entire Bluewater platform.**
 
+> **Note:** Every documentation file begins with a machine-managed metadata block, bounded by HTML comment markers (`<!-- FILE HEADER:START -->` and `<!-- FILE HEADER:END -->`), which is automatically inserted and updated by project scripts.  
+> For policy details, see the [File Header & Metadata Policy](./docs/en/architecture/status/header-policy.md).
+
 ---
 
 ## Overview
@@ -55,6 +58,8 @@ By centralizing all critical automation here and integrating it as a submodule i
   - Pre-commit, commit-msg, and pre-push hooks for enforcing standards and compliance.
   - Automatic updates for metadata (copyright, date, legal).
   - Protection against documentation and code quality issues.
+- **Automated Metadata Headers**
+  - Every documentation file begins with a machine-managed metadata block, delimited by HTML comment markers, which is updated automatically by project automation.
 - **Cross-Platform Support**
   - Scripts for Unix (bash), Windows (batch), and Python for portability.
 - **Strict Linting and Formatting**
@@ -167,4 +172,4 @@ Inspired by leading open-source automation practices and a commitment to project
 
 ---
 
-{{last\_updated}}
+{{last_updated}}

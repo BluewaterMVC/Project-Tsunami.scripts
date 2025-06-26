@@ -62,6 +62,8 @@ All automation, validation, and reporting should reference this live project dat
   Documentation status, review, and progress should be visualized and tracked via the project board, and rendered in dashboards or reports as needed.
 * **Change Triggers:**
   Any update to a `location` or status field can trigger downstream automation (e.g., update file status header, notify translation teams).
+* **Automated Metadata Sync:**  
+  The file header metadata block in each documentation file is automatically managed by project automation and always reflects the authoritative status and path as tracked on the GitHub Project board. For header format and marker details, see [Header and Metadata Policy](../status/header-policy.md).
 
 ---
 
@@ -74,7 +76,7 @@ flowchart TD
     B -->|Updates status| C
     C -->|Sync/validate| D[Status Reports/Dashboards]
     B -->|Notify| E[Maintainers/Translators]
-```
+````
 
 ---
 
