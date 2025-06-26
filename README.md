@@ -1,14 +1,35 @@
 <!-- Multi-language Translation Status with Images -->
 {{lang_status_bar}}
 
----
+<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
 
 <!-- Badge Status Block -->
 {{badge_status_block}}
 
----
+<!-- Badges: Project Metadata and Status -->
+![Framework](https://img.shields.io/badge/framework-Bluewater-lightblue?logo=dropbox&logoColor=white)
+![Status](https://img.shields.io/badge/status-active-blue)
+![Version](https://img.shields.io/badge/version-0.1-blue?logo=semantic-release&logoColor=white)
 
-<img src="docs/en/assets/bw-git-banner.png" alt="Bluewater"/>
+![Language](https://img.shields.io/badge/language-PHP%208.2+-blue?logo=php&logoColor=white)
+![OpenAPI](https://img.shields.io/badge/API-OpenAPI_3-green?logo=openapiinitiative&logoColor=white)
+
+![License](https://img.shields.io/badge/license-MIT-green?logo=open-source-initiative&logoColor=white)
+![Docs](https://img.shields.io/badge/docs-Available-blue?logo=readthedocs&logoColor=white)
+
+![Multi-Tenant](https://img.shields.io/badge/multi--tenant-enabled-blue?logo=archlinux&logoColor=white)
+![Security](https://img.shields.io/badge/security-Middleware--Driven-important?logo=auth0&logoColor=white)
+![Auth](https://img.shields.io/badge/auth-JWT%20%7C%20OAuth-blue?logo=auth0&logoColor=white)
+
+![Tests](https://img.shields.io/badge/tests-not%20configured-lightgrey?logo=githubactions&logoColor=white)
+![Coverage](https://img.shields.io/badge/coverage-N/A-lightgrey?logo=codecov&logoColor=white)
+![CI](https://img.shields.io/badge/ci-GitHub_Actions-blue?logo=githubactions&logoColor=white)
+
+![Composer](https://img.shields.io/badge/Dependency-Composer-orange?logo=composer&logoColor=white)
+![Docker](https://img.shields.io/badge/Container-Docker-blue?logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Orchestration-Kubernetes-blue?logo=kubernetes&logoColor=white)
+
+---
 
 # 🌊 Bluewater Central Script Repository
 
