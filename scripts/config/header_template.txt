@@ -1,0 +1,10 @@
+---
+
+📄 **File:** {{File}}
+🟢 **Status:** {{Status_emoji}} {{Status}}
+🕒 **Updated:** {{Updated}}
+🔖 **Version:** {{Version}}
+📦 **Scope:** {{Scope_emoji}} {{Scope}}
+👨‍💻 **Author:** {{Author}}
+
+---
