@@ -1,10 +1,8 @@
 """
 ------------------------------------------------------------------------------
 Script Name   : test_scan_file_header_block.py
-Description   : Tests scan_file_header_block.py header insertion utility.
-                - Test 1: Missing placeholder raises error.
-                - Test 2: Placeholder is replaced with rendered metadata, showing BEFORE and AFTER content.
-Version       : 1.0.0
+Description   : Tests insertion and updating of the file header metadata block.
+Version       : 1.2.0
 Author        : Bluewater Team <dev@bluewaterphp.org>
 Maintainer    : Bluewater Team <dev@bluewaterphp.org>
 Created       : 2025-06-27
@@ -17,67 +15,75 @@ Status        : In Testing
 
 import os
 import tempfile
-import yaml
-import pytest
-from scripts.utils.scan_file_header_block import insert_file_header_block
+from scripts.utils.scan_file_header_block import insert_or_update_header
 
-def load_example_metadata():
-    """
-    Loads example metadata from the standard config location.
-    Edit path if you use a different config dir or metadata filename.
-    """
-    config_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'config'))
-    metadata_path = os.path.join(config_dir, 'example_header_metadata.yml')
-    with open(metadata_path, "r", encoding="utf-8") as f:
-        metadata = yaml.safe_load(f)
-    return metadata
+def example_metadata():
+    return {
+        "File": "/docs/en/architecture/status/checklists.md",
+        "Status_emoji": "🟡",
+        "Scope_emoji": "🌐",
+        "Version": "1.0",
+        "Scope": "Public – All Contributors",
+        "Author": "Bluewater Team"
+    }
 
-def test_insert_file_header_block_raises_if_missing():
-    print("\nTEST 1: Missing {{file_header_block}} should raise ValueError.")
-    metadata = load_example_metadata()
-    content = '''{{lang_url_bar}}
+def create_temp_file(content):
+    tmp = tempfile.NamedTemporaryFile("w+", delete=False, suffix=".md", encoding="utf-8")
+    tmp.write(content)
+    tmp.close()
+    return tmp.name
 
-Some doc body here.
-'''
+def test_insert_placeholder():
+    meta = example_metadata()
+    orig_content = "{{lang_url_bar}}\n"
+    path = create_temp_file(orig_content)
     try:
-        insert_file_header_block(content, metadata)
-        print("FAIL: No ValueError was raised when placeholder was missing!")
-        assert False, "ValueError was NOT raised when placeholder was missing."
-    except ValueError as e:
-        print(f"PASS: Caught expected ValueError: {e}")
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+        new_content, action = insert_or_update_header(content, meta, "In Progress")
+        print(f"\n==[ Insert Placeholder ({action}) ]==\n{new_content}")
+        assert "{{file_header_block}}" in new_content
+        assert action == "placeholder_added"
+    finally:
+        os.unlink(path)
 
-def test_insert_file_header_block_with_external_configs():
-    print("\nTEST 2: Placeholder is present and should be replaced with header metadata.")
-    metadata = load_example_metadata()
-    content = '''{{lang_url_bar}}
-{{file_header_block}}
+def test_replace_placeholder_with_header():
+    meta = example_metadata()
+    content_with_placeholder = "{{lang_url_bar}}\n{{file_header_block}}\n"
+    path = create_temp_file(content_with_placeholder)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+        new_content, action = insert_or_update_header(content, meta, "In Progress")
+        print(f"\n==[ Replace Placeholder ({action}) ]==\n{new_content}")
+        assert "<!-- FILE HEADER:START -->" in new_content
+        assert "In Progress" in new_content
+        assert action == "block_inserted"
+    finally:
+        os.unlink(path)
 
-Some doc body here.
-'''
-
-    # Show content BEFORE header insertion
-    print("\n==[ Temp file contents BEFORE update: ]==")
-    print(content)
-
-    # Insert header and write to temp file
-    with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.md', encoding='utf-8') as tmpfile:
-        temp_path = tmpfile.name
-        new_content = insert_file_header_block(content, metadata)
-        tmpfile.write(new_content)
-
-    # Show content AFTER header insertion
-    print(f"\n==[ Temp file created at: {temp_path} ]==")
-    with open(temp_path, 'r', encoding='utf-8') as f:
-        file_content = f.read()
-        print("\n==[ Temp file contents AFTER update: ]==")
-        print(file_content)
-
-    os.remove(temp_path)
-
-    # Assert
-    if "{{file_header_block}}" not in file_content:
-        print("PASS: Placeholder was replaced with header metadata.")
-    else:
-        print("FAIL: Placeholder was NOT replaced.")
-    assert "{{file_header_block}}" not in file_content, "Placeholder should be replaced"
-    assert "File:" in file_content and "Status:" in file_content, "Header fields missing"
+def test_update_existing_header():
+    meta = example_metadata()
+    # Simulate a file with header already inserted and status "In Progress"
+    header = (
+        "<!-- FILE HEADER:START -->\n"
+        "📄 **File:** /docs/en/architecture/status/checklists.md\n"
+        "🟡 **Status:** In Progress\n"
+        "🕒 **Updated:** 2025-06-27\n"
+        "🔖 **Version:** 1.0\n"
+        "🌐 **Scope:** Public – All Contributors\n"
+        "👨‍💻 **Author:** Bluewater Team\n"
+        "<!-- FILE HEADER:END -->\n"
+    )
+    content_with_header = f"{{{{lang_url_bar}}}}\n{header}"
+    path = create_temp_file(content_with_header)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            content = f.read()
+        new_content, action = insert_or_update_header(content, meta, "In Review")
+        print(f"\n==[ Update Header Block ({action}) ]==\n{new_content}")
+        assert "<!-- FILE HEADER:START -->" in new_content
+        assert "In Review" in new_content
+        assert action == "block_updated"
+    finally:
+        os.unlink(path)
