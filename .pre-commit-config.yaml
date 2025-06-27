@@ -1,0 +1,31 @@
+# .pre-commit-config.yaml
+# Place this file at your repository root.
+
+repos:
+  - repo: local
+    hooks:
+      - id: file-header-block
+        name: Update file header metadata
+        entry: python3 scripts/utils/scan_file_header_block.py
+        language: python
+        types: [file]
+        files: \.md$
+      - id: markdownlint-local
+        name: markdownlint CLI
+        entry: markdownlint .
+        language: system
+        types: [file]
+        files: \.md$
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-json
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
