@@ -2,7 +2,6 @@
   "default": true,
   "MD013": {
     "line_length": 120,
-    "ignore_code_blocks": true,
     "tables": false
   },
   "MD007": {
@@ -12,9 +11,7 @@
   "MD001": true,
   "MD018": true,
   "MD019": true,
-  "MD024": {
-    "allow_different_nesting": false
-  },
+  "MD024": true,
   "MD029": {
     "style": "ordered"
   },
