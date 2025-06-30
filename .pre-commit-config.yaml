@@ -1,20 +1,20 @@
 # .pre-commit-config.yaml
-# Place this file at your repository root.
 
 repos:
   - repo: local
     hooks:
       - id: file-header-block
         name: Update file header metadata
-        entry: python3 scripts/utils/scan_file_header_block.py
+        entry: python scripts/utils/scan_file_header_block.py
         language: python
         types: [file]
         files: \.md$
-      - id: markdownlint-local
-        name: markdownlint CLI
-        entry: markdownlint .
-        language: system
-        types: [file]
+        additional_dependencies: [pyyaml]
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.45.0
+    hooks:
+      - id: markdownlint
         files: \.md$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -29,3 +29,9 @@ repos:
     rev: v1.37.1
     hooks:
       - id: yamllint
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        files: \.(md|yaml|yml|json|js|ts|css|scss)$
